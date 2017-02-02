@@ -6,7 +6,7 @@ import plistlib
 import sys
 import urllib2
 
-CSV_LOCATION = 'http://pluto.edu.ecuad.ca/imaging/reporting/inventory.csv'
+CSV_LOCATION = 'http://your.domain/imaging/reporting/inventory.csv'
 CSV = urllib2.urlopen(CSV_LOCATION)
 
 def get_hardware_info():

@@ -12,7 +12,7 @@ HOSTNAMETEMP=$( scutil --get ComputerName );
 HOSTNAME=${HOSTNAMETEMP// /}
 
 # Change this URL to the location fo your Munki Enroll install
-SUBMITURL="http://pluto.edu.ecuad.ca/deployment/enroll/server.php"
+SUBMITURL="http://your.domain/deployment/enroll/server.php"
 
 # Test the connection to the server
 SHORTURL=$(echo "$SUBMITURL" | awk -F/ '{print $3}')
