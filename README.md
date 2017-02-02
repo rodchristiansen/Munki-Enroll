@@ -8,11 +8,11 @@ This is a fork from the original: https://github.com/edingc/munki-enroll
 
 Munki Enroll requires PHP to be working on the webserver hosting your Munki repository.
 
-1. Create a “enroll” folder in the root of your Munki repository (the same directory as pkgs, pkginfo, manifests and catalogs). Add the `server.php` and the `templates` folder to this new folder.
-
-2. Edit the location in the `.pkginfo` of the CSV to match your organization and file share.
-
-3. Add the `.pkginfo` to your Munki repository and add it as an install item. Munki will now do all the magic.
+1. Create a “enroll” folder in the root of your Munki repository (the same directory as pkgs, pkginfo, manifests and catalogs). 
+2. Add the `server.php` and the `templates` folder to this new folder.
+3. Edit the `SUBMITURL` inside the `server.php` script.
+3. Edit the URL location in the `.pkginfo` of the CSV to match your organization and file share.
+4. Add the `.pkginfo` to your Munki repository and add it as an install item. Munki will now do all the magic.
 
 ## How This Is All Working ##
 
