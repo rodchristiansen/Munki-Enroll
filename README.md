@@ -4,7 +4,7 @@ A set of scripts to automatically enroll clients in Munki, allowing for a very f
 
 This is a fork from the original: https://github.com/edingc/munki-enroll
 
-## How To Enrol Clients ##
+## How To Enroll Clients ##
 
 Munki Enroll requires PHP to be working on the webserver hosting your Munki repository.
 
