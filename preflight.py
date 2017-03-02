@@ -6,7 +6,7 @@ import plistlib
 import sys
 import urllib2
 
-CSV_LOCATION = 'http://your.domain/imaging/reporting/inventory.csv'
+CSV_LOCATION = 'http://pluto.edu.ecuad.ca/imaging/reporting/inventory.csv'
 CSV = urllib2.urlopen(CSV_LOCATION)
 
 def get_hardware_info():
@@ -26,7 +26,7 @@ def get_hardware_info():
     except Exception:
         return {}
 
-def check(serial_number, local_computername, local_hostname, local_catalog, local_area, local_room, local_asset):
+def check(serial_number, local_computername, local_hostname, local_catalog, local_area, local_room, local_asset, local_manifest):
     csv_data = csv.DictReader(CSV, delimiter=',')
     for row in csv_data:
         serial = row['serial']
@@ -36,6 +36,7 @@ def check(serial_number, local_computername, local_hostname, local_catalog, loca
         csv_area = row['area']
         csv_room = row['room']
         csv_asset = row['asset']
+        csv_manifest = (row['catalog']+"/"+row['area']+"/"+row['name'].replace(' ',''))
         if serial == serial_number:
             if csv_computername != local_computername:
                 sys.exit(0)                      
@@ -48,6 +49,8 @@ def check(serial_number, local_computername, local_hostname, local_catalog, loca
             elif csv_room != local_room:
                 sys.exit(0)
             elif csv_asset != local_asset:
+                sys.exit(0)
+            elif csv_manifest != local_manifest:
                 sys.exit(0)
             else:
                 sys.exit(1)
@@ -104,6 +107,14 @@ def get_asset():
     (output, unused_error) = proc.communicate()
     return output.rstrip('\n')
 
+def get_manifest():
+    cmd = ['/usr/bin/defaults', 'read', '/Library/Preferences/ManagedInstalls.plist', 'ClientIdentifier']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    return output.rstrip('\n')
+
 def main():
     serial_number = get_serial_number()
     local_computername = get_computername()
@@ -112,7 +123,8 @@ def main():
     local_area = get_area()
     local_room = get_room()
     local_asset = get_asset()
-    check(serial_number, local_computername, local_hostname, local_catalog, local_area, local_room, local_asset)
+    local_manifest = get_manifest()
+    check(serial_number, local_computername, local_hostname, local_catalog, local_area, local_room, local_asset, local_manifest)
 
 if __name__ == '__main__':
     main()
